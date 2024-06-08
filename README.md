@@ -25,9 +25,7 @@ An end-to-end chat based app that enables users to talk to a database in natural
 
 Watch the demo video below to see this app in action:
 
-<a href="./doc/db-chat-demo.webm">
-  <img src="./doc/db-chat-demo-thumbnail.jpg" alt="Watch the demo video" width="320" height="180">
-</a>
+[db-chat-demo.webm](https://github.com/LostInCode404/db-chat/assets/15314796/10a84425-39f5-434d-a577-0c6946ad5189)
 
 ## System Architecture
 
