@@ -1,0 +1,47 @@
+version: '3'
+services:
+  app:
+    container_name: dbchat-app
+    env_file:
+      - ./.env
+    environment:
+      - GOOGLE_API_KEY
+      - GOOGLE_MODEL_NAME=${GOOGLE_MODEL_NAME:-gemini-1.5-flash}
+      - FEW_SHOT_DATA_FILE=${FEW_SHOT_DATA_FILE:-few-shot-data.json}
+      - SQL_USE_CUSTOM_DB=${SQL_USE_CUSTOM_DB:-false}
+      - SQL_HOST=${SQL_HOST:-db}
+      - SQL_PORT=${SQL_PORT:-3306}
+      - SQL_DB_NAME=${SQL_DB_NAME:-dbchat}
+      - SQL_USERNAME=${SQL_USERNAME:-root}
+      - SQL_PASSWORD=${SQL_PASSWORD:-admin}
+    build:
+      context: .
+      dockerfile: ./app/Dockerfile
+    ports:
+      - "5000:8501"
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: mariadb:11.4.2-noble
+    container_name: dbchat-db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=dbchat
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mariadb",
+          "--database=dbchat",
+          "--user=root",
+          "--password=admin"
+        ]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - ./sql-db:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306

@@ -1,0 +1,87 @@
+[
+    {
+        "input": "What is the total price of all Nike items?",
+        "query": "SELECT SUM(product.price * product.quantity) FROM product JOIN brand ON product.brand_id = brand.brand_id WHERE brand.name = 'Nike'",
+        "answer": "The total price of all Nike items is Rs. 56,13,500."
+    },
+    {
+        "input": "What colors are available for Shorts of brand Nike?",
+        "query": "SELECT DISTINCT color FROM product WHERE brand_id = (SELECT brand_id FROM brand WHERE name = 'Nike') AND product_name_id = (SELECT product_name_id FROM product_name WHERE name = 'Shorts')",
+        "answer": "The available colors for Shorts of brand Nike are:\n-Red"
+    },
+    {
+        "input": "How much is the price of the inventory for Nike brand?",
+        "query": "SELECT SUM(p.price * p.quantity) FROM product p JOIN brand b ON p.brand_id = b.brand_id WHERE b.name = 'Nike'",
+        "answer": "The total price of the inventory for Nike brand is Rs. 56,13,500."
+    },
+    {
+        "input": "How much is the price of the inventory for all Nike brand items?",
+        "query": "SELECT SUM(p.price * p.quantity) FROM product p JOIN brand b ON p.brand_id = b.brand_id WHERE b.name = 'Nike'",
+        "answer": "The total price of the inventory for Nike brand is Rs. 56,13,500."
+    },
+    {
+        "input": "What brands are available?",
+        "query": "select name from brand",
+        "answer": "The available brands are:\n- Nike\n- Adidas\n- Levi\n- Gucci"
+    },
+    {
+        "input": "What products are available?",
+        "query": "SELECT DISTINCT name FROM product left join product_name on product_name.product_name_id = product.product_name_id",
+        "answer": "The available products are:\n- Shirt\n- Jacket\n- Jeans\n- Shorts\n- Sneakers\n- Sandals\n- Boots"
+    },
+    {
+        "input": "What Adidas products are available?",
+        "query": "SELECT DISTINCT name FROM product left join product_name on product_name.product_name_id = product.product_name_id",
+        "answer": "The available products are:\n- Shirt\n- Jacket\n- Jeans\n- Shorts\n- Sneakers\n- Sandals\n- Boots"
+    },
+    {
+        "input": "If I sell all my Nike items that are on discount, how much revenue will my store generate?",
+        "query": "SELECT SUM(p.price * p.quantity * (1 - d.percent / 100)) AS total_revenue FROM product p JOIN discount d ON p.product_id = d.product_id JOIN brand b ON p.brand_id = b.brand_id WHERE b.name = 'Nike'",
+        "answer": "Your store will generate Rs. 27,16,450 in revenue if you sell all your Nike items that are on discount."
+    },
+    {
+        "input": "Give me the list of the Nike products on discount along with their colors, prices, discounts, quantities.",
+        "query": "SELECT p.color, p.price, d.percent, p.quantity, pn.name FROM product p JOIN brand b ON p.brand_id = b.brand_id JOIN discount d ON p.product_id = d.product_id JOIN product_name pn ON p.product_name_id = pn.product_name_id WHERE b.name = 'Nike'",
+        "answer": "The Nike products on discount are:\n- Red Shirt with price Rs. 2000.00, discount 10%, quantity 100\n- Green Shirt with price Rs. 2500.00, discount 5%, quantity 140\n- White Shirt with price Rs. 2300.00, discount 30%, quantity 110\n- Blue Shirt with price Rs. 2400.00, discount 10%, quantity 160, Red Jacket with price Rs. 5000.00, discount 20%, quantity 80\n- Blue Jacket with price Rs. 5500.00, discount 10%, quantity 75\n- Green Jacket with price Rs. 5600.00, discount 25%, quantity 100\n- Red Jeans with price Rs. 3000.00, discount 5%, quantity 200"
+    },
+    {
+        "input": "How many red Nike Shirts are available.",
+        "query": "SELECT sum(quantity) FROM product WHERE color = 'Red' AND brand_id = (SELECT brand_id FROM brand WHERE name = 'Nike') AND product.product_name_id = (SELECT product_name_id from product_name where name='Shirt')",
+        "answer": "There are 3 red Nike shirts available."
+    },
+    {
+        "input": "List all the red nike products.",
+        "query": "SELECT DISTINCT pn.name FROM product p JOIN brand b ON p.brand_id = b.brand_id JOIN product_name pn on p.product_name_id = pn.product_name_id WHERE b.name = 'Nike' AND p.color = 'Red'",
+        "answer": "The red Nike products are:\n- Jacket\n- Jeans\n- Shirt\n- Shorts\n- Sneakers"
+    },
+    {
+        "input": "How many Nike products are available",
+        "query": "SELECT COUNT(*) FROM product WHERE brand_id = (SELECT brand_id FROM brand WHERE name = 'Nike')",
+        "answer": "There are 1595 Nike products available."
+    },
+    {
+        "input": "How many Nike shirts are available",
+        "query": "SELECT SUM(product.quantity) FROM product WHERE brand_id = (SELECT brand_id FROM brand WHERE name = 'Nike') AND product.product_name_id = (SELECT product_name_id from product_name where name='Shirt');",
+        "answer": "There are total 510 Nike shirts available."
+    },
+    {
+        "input": "What colors are available for Gucci boots?",
+        "query": "SELECT DISTINCT color FROM product WHERE product_name_id = (SELECT product_name_id FROM product_name WHERE name = 'Boots') AND brand_id = (SELECT brand_id FROM brand WHERE name = 'Gucci')",
+        "answer": "The available colors for Adidas Boots are:\n- White"
+    },
+    {
+        "input": "What all Levi products are available?",
+        "query": "SELECT DISTINCT pn.name FROM product p JOIN brand b ON p.brand_id = b.brand_id JOIN product_name pn on p.product_name_id = pn.product_name_id WHERE b.name = 'Levi'",
+        "answer": "The Levi products available are:\n- Shirt\n- Jacket\n- Jeans\n- Shorts\n- Sneakers\n- Sandals\n- Boots"
+    },
+    {
+        "input": "Do we have any Levi jeans available?",
+        "query": "SELECT color,quantity FROM product WHERE brand_id = (SELECT brand_id FROM brand WHERE name = 'Levi') AND product_name_id = (SELECT product_name_id FROM product_name WHERE name = 'Jeans')",
+        "answer": "Yes, we have Levi jeans available:\n- 190 Blue jeans\n- 180 Green jeans"
+    },
+    {
+        "input": "Are there any Levi jeans available?",
+        "query": "SELECT color,quantity FROM product WHERE brand_id = (SELECT brand_id FROM brand WHERE name = 'Levi') AND product_name_id = (SELECT product_name_id FROM product_name WHERE name = 'Jeans')",
+        "answer": "Yes, we have Levi jeans available:\n- 190 Blue jeans\n- 180 Green jeans"
+    }
+]
