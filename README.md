@@ -38,6 +38,11 @@ The system is composed of five main components:
 4. **SQL Database**: Source of the data.
 5. **Streamlit UI**: Provides an interface for users to submit queries and view results.
 
+&nbsp;<br>
+<img src="doc/db-chat-overview.png" width="800" style="margin-left: 20px" />
+
+&nbsp;<br>
+
 ### Component Details
 
 #### 1. Gemini LLM
