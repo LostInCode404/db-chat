@@ -10,6 +10,8 @@ An end-to-end chat based app that enables users to talk to a database in natural
     * [Component Overview](#component-overview)
     * [Component Details](#component-details)
 * [End-to-End Flow](#end-to-end-flow)
+    * [Preprocessing](#preprocessing)
+    * [Querying](#querying)
 * [Deployment](#deployment)
     * [Docker Compose Deployment](#docker-compose-deployment)
     * [Use Custom Database](#use-custom-database)
@@ -72,12 +74,29 @@ Streamlit UI takes the user input and uses the agent to generate results.
 
 
 ## End-to-End Flow
+
+### Preprocessing
+
+1. **Few Shots Data**: On app load, the script loads the few shots data file.
+2. **Indexing**: The data from few shots data file indexed into the Vector DB.
+
+&nbsp;<br>
+<img src="doc/db-chat-preprocessing.png" width="800" style="margin-left: 20px" />
+
+### Querying
+
 1. **User Input**: Users enter the query in the chat interface.
 2. **Vector DB Lookup**: ChromaDB searches for similar queries and fetches top 5 matches.
 3. **Prompt Generation**: Custom prompt is generated which includes the top 5 matching user queries (along with their correct SQL queries and responses) from vector DB.
 4. **SQL Generation**: The LLM then reads the final prompt and interacts with the langchain's SQL toolkit to generate an SQL query that should fetch the data required for responding to the user query.
 5. **LLM Response**: The LLM generates final response based on the results of the generated query.
 6. **Chat Output**: The final LLM response is displayed to the user in chat interface.
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+<img src="doc/db-chat-qa-flow.png" width="800" style="margin-left: 20px" />
+
+&nbsp;<br>
 
 ## Deployment
 
